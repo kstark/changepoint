@@ -1,5 +1,11 @@
+
 """
-http://www.variation.com/cpa/tech/changepoint.html
+The implementation borrows heavily from the algorithm documented at
+http://www.variation.com/cpa/tech/changepoint.html.  A more detailed
+paper is available at http://www.inference.phy.cam.ac.uk/rpa23/papers/rpa-changepoint.pdf.
+
+The basic idea is to find abrupt variations in the generative parameters
+of a data sequence.
 """
 from __future__ import division
 
