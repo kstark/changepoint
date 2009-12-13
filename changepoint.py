@@ -35,16 +35,17 @@ def bootstrap(data, iterations):
         n += (1 if bdiff < sdiff else 0)
     return n
 
-def changepoint(data, confidence=90, iterations=1000, offset=0):
-    if offset < 0:
-        raise StopIteration()
-    x = bootstrap(data, iterations)
-    p = (x/iterations) * 100.0
-    if p > confidence:
-        c = cusum(data)
-        mx = c.argmax()
-        yield mx + offset
-        for x in changepoint(data[:mx], confidence, iterations, offset):
-            yield x
-        for x in changepoint(data[mx:], confidence, iterations, offset+mx-1):
-            yield x
+def changepoint(data, confidence=90, iterations=1000):
+    stack = [(data, 0)]
+    while stack:
+        data, offset = stack.pop()
+        if offset < 0:
+            continue
+        x = bootstrap(data, iterations)
+        p = (x/iterations) * 100.0
+        if p > confidence:
+            c = cusum(data)
+            mx = c.argmax()
+            yield mx + offset
+            stack.append((data[:mx], offset))
+            stack.append((data[mx:], offset+mx-1))
