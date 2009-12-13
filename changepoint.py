@@ -36,6 +36,8 @@ def bootstrap(data, iterations):
     return n
 
 def changepoint(data, confidence=90, iterations=1000, offset=0):
+    if offset < 0:
+        raise StopIteration()
     x = bootstrap(data, iterations)
     p = (x/iterations) * 100.0
     if p > confidence:
