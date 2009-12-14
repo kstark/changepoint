@@ -32,10 +32,10 @@ def bootstrap(data, iterations):
     for i in range(iterations):
         b = cusum(shuffled(data))
         bdiff = b.max() - b.min()
-        n += (1 if bdiff < sdiff else 0)
+        n += int(bdiff < sdiff)
     return n
 
-def changepoint(data, confidence=90, iterations=1000):
+def changepoint(data, confidence=95., iterations=1000):
     stack = [(data, 0)]
     while stack:
         data, offset = stack.pop()
