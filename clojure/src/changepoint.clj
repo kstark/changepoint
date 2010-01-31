@@ -1,5 +1,7 @@
 (ns changepoint
-  (:gen-class))
+  (:gen-class
+   :main false
+   :methods [#^{:static true} [changepoint [java.util.List float int] java.util.List]]))
 
 (defn mean
   [coll]
