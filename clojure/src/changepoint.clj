@@ -1,4 +1,5 @@
-(ns changepoint)
+(ns changepoint
+  (:gen-class))
 
 (defn mean
   [coll]
