@@ -65,16 +65,5 @@ def main():
             continue
         print i, "==>", a
 
-    # find the next change point
-    # from itertools import count
-    # for c in count(int(data[-1] + 5)):
-    #     m = numpy.append(data, c)
-    #     p = sorted(set(changepoint.changepoint(m, confidence=99.)))
-    #     if len(points) != len(p):
-    #         print "!", c
-    #         break
-    #     else:
-    #         print "#", c
-
 if __name__ == "__main__":
     main()

@@ -32,10 +32,10 @@
     (cusum coll [0] 0 (if (empty? coll) nil (mean coll))))
 
   ([coll acc prior avg]
-    (if (nil? (first coll))
+    (if (empty? coll)
       acc
       (let [v (+ prior (- (first coll) avg))]
-      (recur (next coll) (concat acc [v]) v avg)))))
+        (recur (next coll) (conj acc v) v avg)))))
 
 (defn bootstrap
   [coll iterations]
@@ -48,7 +48,12 @@
   (changepoint coll confidence iterations 0))
 
   ([coll confidence iterations offset]
-  (let [p (float (* 100.0 (/ (bootstrap coll iterations) iterations)))]
-    (if (> p confidence)
-      (let [mx (argmax (cusum coll))]
-      (apply concat [(+ mx offset)] [(changepoint (take mx coll) confidence iterations offset) (changepoint (drop mx coll) confidence iterations (dec offset))]))))))
+    (let [p (float (* 100.0 (/ (bootstrap coll iterations) iterations)))]
+      (if (> p confidence)
+        (let [mx (argmax (cusum coll))]
+          (lazy-seq
+            (cons
+              (+ mx offset)
+              (lazy-cat
+                (changepoint (take mx coll) confidence iterations offset)
+                (changepoint (drop mx coll) confidence iterations (dec (+ offset mx)))))))))))

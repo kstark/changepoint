@@ -33,7 +33,7 @@ def bootstrap(data, iterations):
         b = cusum(shuffled(data))
         bdiff = b.max() - b.min()
         n += int(bdiff < sdiff)
-    return n
+    return c, n
 
 def changepoint(data, confidence=95., iterations=1000):
     stack = [(data, 0)]
@@ -41,11 +41,10 @@ def changepoint(data, confidence=95., iterations=1000):
         data, offset = stack.pop()
         if offset < 0:
             continue
-        x = bootstrap(data, iterations)
+        c, x = bootstrap(data, iterations)
         p = (x/iterations) * 100.0
         if p > confidence:
-            c = cusum(data)
             mx = c.argmax()
             yield mx + offset
             stack.append((data[:mx], offset))
-            stack.append((data[mx:], offset+mx-1))
+            stack.append((data[mx:], offset + mx - 1))
