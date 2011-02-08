@@ -1,5 +1,7 @@
 (defproject changepoint "0.1"
-  :dependencies [[org.clojure/clojure
-                  "1.1.0-master-SNAPSHOT"]
-                 [org.clojure/clojure-contrib
-                  "1.0-SNAPSHOT"]])
+  :source-path "src/clj"
+  :test-path "test/clj"
+  :java-source-path "src/jvm"
+  :dependencies [[org.clojure/clojure "1.2.0"]
+                 [org.clojure/clojure-contrib "1.2.0"]
+                 [commons-logging/commons-logging "1.1"]])

@@ -39,7 +39,7 @@ def changepoint(data, confidence=95., iterations=1000):
     stack = [(data, 0)]
     while stack:
         data, offset = stack.pop()
-        if offset < 0:
+        if len(data) == 0 or offset < 0:
             continue
         c, x = bootstrap(data, iterations)
         p = (x/iterations) * 100.0
