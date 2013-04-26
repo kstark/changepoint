@@ -1,4 +1,3 @@
-
 """
 The implementation borrows heavily from the algorithm documented at
 http://www.variation.com/cpa/tech/changepoint.html.  A more detailed
@@ -45,7 +44,7 @@ def changepoint(data, confidence=95., iterations=1000):
         p = (x/iterations) * 100.0
         if p > confidence:
             c = cusum(data)
-            mx = c.argmax()
+            mx = numpy.abs(c).argmax()
             yield mx + offset
             stack.append((data[:mx], offset))
             stack.append((data[mx:], offset+mx-1))
